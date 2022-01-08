@@ -38,16 +38,21 @@ public class ReceiptPrinter {
         return result.toString();
     }
 
+    private boolean hasMultipleQuantity(ReceiptItem item){
+        return item.getQuantity() != 1;
+    }
+
+    private String presentedTotalPrice(ReceiptItem item, String totalPricePresentation, String name){
+        String line = formatLineWithWhitespace(name, totalPricePresentation);
+        if (hasMultipleQuantity(item))
+            line += "  " + presentPrice(item.getPrice()) + " * " + presentQuantity(item) + "\n";
+        return line;
+    }
+
     private String presentReceiptItem(ReceiptItem item) {
         String totalPricePresentation = presentPrice(item.getTotalPrice());
         String name = item.getProduct().getName();
-
-        String line = formatLineWithWhitespace(name, totalPricePresentation);
-
-        if (item.getQuantity() != 1) {
-            line += "  " + presentPrice(item.getPrice()) + " * " + presentQuantity(item) + "\n";
-        }
-        return line;
+        return presentedTotalPrice(item, totalPricePresentation, name);
     }
 
     private String presentDiscount(Discount discount) {
