@@ -1,7 +1,7 @@
 package dojo.supermarket;
 
 import dojo.supermarket.model.*;
-
+import java.util.Collections;
 import java.util.Locale;
 
 public class ReceiptPrinter {
@@ -59,13 +59,18 @@ public class ReceiptPrinter {
         return formatLineWithWhitespace(name, value);
     }
 
+    private int calculateWhiteSpaceSize(String name, String value){
+        return this.columns - name.length() - value.length();
+    }
+
+    private void addWhitespaces(StringBuilder line, int whitespaceSize){
+        line.append(String.join("", Collections.nCopies(whitespaceSize, " ")));
+    }
+
     private String formatLineWithWhitespace(String name, String value) {
         StringBuilder line = new StringBuilder();
         line.append(name);
-        int whitespaceSize = this.columns - name.length() - value.length();
-        for (int i = 0; i < whitespaceSize; i++) {
-            line.append(" ");
-        }
+        addWhitespaces(line, calculateWhiteSpaceSize(name, value));
         line.append(value);
         line.append('\n');
         return line.toString();
