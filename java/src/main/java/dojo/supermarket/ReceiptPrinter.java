@@ -84,11 +84,15 @@ public class ReceiptPrinter {
         return String.format(DEFAULT_LOCALE, "%.2f", price);
     }
 
-    private static String presentQuantity(ReceiptItem item) {
+    private static boolean isProductUnitEach(ReceiptItem item){
+        return item.getProduct().getUnit().equals(ProductUnit.Each);
+    }
 
-        return ProductUnit.Each.equals(item.getProduct().getUnit())
-                ? String.format("%x", (int)item.getQuantity())
-                : String.format(DEFAULT_LOCALE, "%.3f", item.getQuantity());
+    private static String presentQuantity(ReceiptItem item) {
+        if(isProductUnitEach(item))
+            return String.format("%x", (int)item.getQuantity());
+        else
+            return String.format(DEFAULT_LOCALE, "%.3f", item.getQuantity());
     }
 
 }
