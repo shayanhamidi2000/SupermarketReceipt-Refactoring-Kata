@@ -10,6 +10,8 @@ public class ReceiptPrinter {
 
     private static final int DEFAULT_COLUMN_NUMBER = 40;
 
+    private static final Locale DEFAULT_LOCALE = Locale.UK;
+
     public ReceiptPrinter() {
         this(DEFAULT_COLUMN_NUMBER);
     }
@@ -79,13 +81,14 @@ public class ReceiptPrinter {
     }
 
     private static String presentPrice(double price) {
-        return String.format(Locale.UK, "%.2f", price);
+        return String.format(DEFAULT_LOCALE, "%.2f", price);
     }
 
     private static String presentQuantity(ReceiptItem item) {
+
         return ProductUnit.Each.equals(item.getProduct().getUnit())
                 ? String.format("%x", (int)item.getQuantity())
-                : String.format(Locale.UK, "%.3f", item.getQuantity());
+                : String.format(DEFAULT_LOCALE, "%.3f", item.getQuantity());
     }
 
 }
