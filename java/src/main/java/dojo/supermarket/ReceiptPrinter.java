@@ -20,13 +20,14 @@ public class ReceiptPrinter {
         receipt.getItems().forEach(item -> resultStream.append(presentReceiptItem(item)));
     }
 
+    private void addDiscountsToTheReceipt(StringBuilder resultStream, Receipt receipt){
+        receipt.getDiscounts().forEach(discount -> resultStream.append(presentDiscount(discount)));
+    }
+
     public String printReceipt(Receipt receipt) {
         StringBuilder result = new StringBuilder();
         addItemsToTheReceipt(result, receipt);
-        for (Discount discount : receipt.getDiscounts()) {
-            String discountPresentation = presentDiscount(discount);
-            result.append(discountPresentation);
-        }
+        addDiscountsToTheReceipt(result, receipt);
 
         result.append("\n");
         result.append(presentTotal(receipt));
