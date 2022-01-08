@@ -16,12 +16,13 @@ public class ReceiptPrinter {
         this.columns = columns;
     }
 
+    private void addItemsToTheReceipt(StringBuilder resultStream, Receipt receipt){
+        receipt.getItems().forEach(item -> resultStream.append(presentReceiptItem(item)));
+    }
+
     public String printReceipt(Receipt receipt) {
         StringBuilder result = new StringBuilder();
-        for (ReceiptItem item : receipt.getItems()) {
-            String receiptItem = presentReceiptItem(item);
-            result.append(receiptItem);
-        }
+        addItemsToTheReceipt(result, receipt);
         for (Discount discount : receipt.getDiscounts()) {
             String discountPresentation = presentDiscount(discount);
             result.append(discountPresentation);
