@@ -8,8 +8,10 @@ public class ReceiptPrinter {
 
     private final int columns;
 
+    private static final int DEFAULT_COLUMN_NUMBER = 40;
+
     public ReceiptPrinter() {
-        this(40);
+        this(DEFAULT_COLUMN_NUMBER);
     }
 
     public ReceiptPrinter(int columns) {
